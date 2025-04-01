@@ -1,3 +1,2 @@
-[submodule "submodules"]
   path = submodules
   url = https://github.com/Karine-Huang/T2I-CompBench.git
