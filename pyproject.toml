@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
 spacy = "^3.8.4"
+pyrallis = "^0.3.1"
 
 
 [build-system]

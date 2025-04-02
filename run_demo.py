@@ -122,9 +122,9 @@ def main():
     stable, prompt_parser = load_model(config, device)
     # ------------------parser prompt-------------------------
     if config.use_nlp:
-        import en_core_web_trf
+        # import en_core_web_trf
 
-        nlp = en_core_web_trf.load()  # load spacy
+        nlp = None   #en_core_web_trf.load()  # load spacy
 
         doc = nlp(config.prompt)
         prompt_parser.set_doc(doc)
@@ -172,4 +172,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    path = 'submodules/examples/dataset/color_val.txt'
+    s = read_prompt(path)
+    print(s)
+    print(type(s[0]))
+    idx, pr = s[0]
+    print(idx, pr)
+    # main()
