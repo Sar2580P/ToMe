@@ -1,0 +1,77 @@
+prompts: [
+  'a white cat and a black dog', 
+  'a cat wearing sunglasses and a dog wearing hat', 
+  'a red sports car overtaking a sleek blue motorcycle on a rain-soaked highway',
+  'an astronaut giving a holographic map to a curious alien on a distant planet',
+  'a fearless boxer delivering a powerful punch to a defiant opponent in a packed arena', 
+  'a medieval merchant giving a rare gemstone to a sly thief in a bustling marketplace'
+
+]
+prompts_merged: [
+  'a cat and a dog' ,
+  'a cat and a dog' , 
+  'a car and a motorcycle',
+  'an astronaut and an alien',
+  'a boxer and an opponent',
+  'a merchant and a thief'
+]
+
+tome_params :
+    prompt: "a white cat and a black dog"
+    # stable diffusion model path,set to None means sdxl model will be downloaded automatically
+    model_path:  "stabilityai/stable-diffusion-xl-base-1.0"
+    # whether use nlp model to spilt the prompt
+    use_nlp:  True
+    prompt_anchor: [
+            "a white cat",
+            "a black dog",
+        ]
+
+    # prompt after token merge
+    prompt_merged: "a cat and a dog"
+    # words of the prompt
+    prompt_length: 7
+    # Which random seeds to use when generating
+    seeds: [43, 198]
+    # Path to save all outputs to
+    output_path: results
+    should_perform_logging: False 
+    # Number of denoising steps
+    n_inference_steps:  50
+    # Text guidance scale
+    guidance_scale: 7.5
+    # Resolution of UNet to compute attention maps over
+    attention_res: 32
+    # Whether to run standard SD or attend-and-excite
+    run_standard_sd: False
+    # Dictionary defining the iterations and desired thresholds to apply iterative latent refinement in
+    thresholds: 
+        0: 26
+        1: 25
+        2: 24
+        3: 23
+        4: 22.5
+        5: 22
+        6: 21.5
+        7: 21
+        8: 21
+        9: 21
+
+    # steps to use tome refinement, only works when run_standard_sd is False, first one control token refinement, second one control attention refinement
+    tome_control_steps: [5, 5]
+    # token refinement steps per inference step, only works when run_standard_sd is False,
+    token_refinement_steps:  3
+    # attention map refinement steps per inference step, only works when run_standard_sd is False,
+    attention_refinement_steps: [4, 4]
+    # the timestep to replace prompt eot to merged prompt eot, only works when run_standard_sd is False, if value < 0, means do not replace eot tokens.
+    # Earlier substitutions will result in missing subjects, later substitutions will cause confusion of subjects
+    eot_replace_step: 60  # if larger than n_inference_steps, means do not replace eot tokens
+    # Pose loss will widen the distance between different subjects and reduce the situation of being confused into one.
+    # Details see Appendix E. and https://arxiv.org/abs/2306.00986
+    use_pose_loss: False
+    # Scale factor for updating the denoised latent z_t
+    scale_factor: 3
+    # Start and end values used for scaling the scale factor - decays linearly with the denoising timestep
+    scale_range: [1.0, 0.0]
+    # Whether to save cross attention maps for the final results
+    save_cross_attention_maps: False
